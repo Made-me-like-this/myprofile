@@ -867,6 +867,7 @@ footer {
     width: 50ch;
     animation: blink 0.75s step-end infinite;
     color: #dcd9d9;
+    height: 20vh;
 }
 
 @keyframes blink {
