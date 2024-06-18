@@ -1,15 +1,3 @@
-/*!
-    Title: Dev Portfolio Template
-    Version: 1.2.2
-    Last Change: 03/25/2020
-    Author: Ryan Fitzgerald
-    Repo: https://github.com/RyanFitzgerald/devportfolio-template
-    Issues: https://github.com/RyanFitzgerald/devportfolio-template/issues
-
-    Description: This file contains all the scripts associated with the single-page
-    portfolio website.
-*/
-
 (function($) {
 
     // Show current year
@@ -98,3 +86,39 @@
     });
 
 })(jQuery);
+const texts = ["My name is AbdulRahman", "Welcome to my website", "Enjoy your stay"];
+let currentTextIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typingSpeed = 150;
+const deletingSpeed = 100;
+const delayBetweenTexts = 1000;
+
+const typingTextElement = document.getElementById('typing-text');
+
+function type() {
+    const currentText = texts[currentTextIndex];
+    
+    if (isDeleting) {
+        typingTextElement.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typingTextElement.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    if (!isDeleting && charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(type, delayBetweenTexts);
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        setTimeout(type, typingSpeed);
+    } else {
+        setTimeout(type, isDeleting ? deletingSpeed : typingSpeed);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    type();
+});
